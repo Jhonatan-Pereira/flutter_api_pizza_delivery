@@ -1,8 +1,9 @@
 import 'package:injectable/injectable.dart';
 import 'package:mysql1/src/single_connection.dart';
+
 import 'package:pizza_delivery_api/application/config/pizza_delivery_config.dart';
-import 'package:pizza_delivery_api/application/database/i_db_connection.dart';
-import 'package:pizza_delivery_api/pizza_delivery_api.dart';
+
+import './i_db_connection.dart';
 
 @Injectable(as: IDBConnection)
 class DBConnection implements IDBConnection {
