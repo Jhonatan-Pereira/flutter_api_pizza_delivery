@@ -11,6 +11,7 @@ import '../database/db_connection.dart';
 import '../database/i_db_connection.dart';
 import '../../modules/data/i_user_repository.dart';
 import '../../modules/service/i_user_service.dart';
+import '../../modules/controller/login_user_controller.dart';
 import 'pizza_delivery_config.dart';
 import '../../modules/controller/register_user_controller.dart';
 import '../../modules/data/user_repository.dart';
@@ -29,6 +30,8 @@ GetIt $initGetIt(
       () => DBConnection(get<PizzaDeliveryConfiguration>()));
   gh.lazySingleton<IUserRepository>(() => UserRepository(get<IDBConnection>()));
   gh.lazySingleton<IUserService>(() => UserService(get<IUserRepository>()));
+  gh.factory<LoginUserController>(
+      () => LoginUserController(get<IUserService>()));
   gh.factory<RegisterUserController>(
       () => RegisterUserController(get<IUserService>()));
   return get;

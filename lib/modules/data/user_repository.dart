@@ -1,7 +1,9 @@
 import 'package:injectable/injectable.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:pizza_delivery_api/application/database/i_db_connection.dart';
+import 'package:pizza_delivery_api/application/entities/user.dart';
 import 'package:pizza_delivery_api/application/exceptions/db_error_exception.dart';
+import 'package:pizza_delivery_api/application/exceptions/user_notfound_exception.dart';
 import 'package:pizza_delivery_api/application/helpers/cripty-helpers.dart';
 import 'package:pizza_delivery_api/modules/data/i_user_repository.dart';
 import 'package:pizza_delivery_api/modules/view_models/register_user_input_model.dart';
@@ -27,6 +29,34 @@ class UserRepository implements IUserRepository {
     } on MySqlConnection catch (e) {
       print(e);
       throw DBErrorException(message: 'Erro ao registrar usuário');
+    } finally {
+      await conn?.close();
+    }
+  }
+
+  @override
+  Future<User> login(String email, String password) async {
+    final conn = await _connection.openConnection();
+
+    try {
+      final result = await conn.query(''' 
+        select * from usuario where email = ? and senha = ?
+      ''', [email, CriptyHelpers.generateSHA256Hash(password)]);
+
+      if (result.isEmpty) {
+        throw UserNotfoundException();
+      }
+
+      final fields = result.first.fields;
+      return User(
+        id: fields['id_usuario'] as int,
+        name: fields['nome'] as String,
+        email: fields['email'] as String,
+        password: fields['senha'] as String,
+      );
+    } on MySqlConnection catch (e) {
+      print(e);
+      throw DBErrorException(message: 'Erro ao buscar usuário');
     } finally {
       await conn?.close();
     }
