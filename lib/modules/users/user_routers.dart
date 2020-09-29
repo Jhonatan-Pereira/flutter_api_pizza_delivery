@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:pizza_delivery_api/application/routers/i_router_configure.dart';
-import 'package:pizza_delivery_api/modules/controller/login_user_controller.dart';
+import 'package:pizza_delivery_api/modules/users/controller/login_user_controller.dart';
 import 'package:pizza_delivery_api/pizza_delivery_api.dart';
 
 import 'controller/register_user_controller.dart';

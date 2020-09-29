@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:pizza_delivery_api/application/exceptions/user_notfound_exception.dart';
-import 'package:pizza_delivery_api/modules/service/i_user_service.dart';
-import '../../pizza_delivery_api.dart';
+import 'package:pizza_delivery_api/modules/users/service/i_user_service.dart';
+import '../../../pizza_delivery_api.dart';
 import 'models/login_user_rq.dart';
 
 @Injectable()
