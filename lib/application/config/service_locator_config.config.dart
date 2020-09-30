@@ -11,13 +11,18 @@ import '../database/db_connection.dart';
 import '../database/i_db_connection.dart';
 import '../../modules/menu/data/i_menu_repository.dart';
 import '../../modules/menu/service/i_menu_service.dart';
+import '../../modules/orders/data/i_order_repository.dart';
+import '../../modules/orders/service/i_order_service.dart';
 import '../../modules/users/data/i_user_repository.dart';
 import '../../modules/users/service/i_user_service.dart';
 import '../../modules/users/controller/login_user_controller.dart';
 import '../../modules/menu/controller/menu_find_controller.dart';
 import '../../modules/menu/data/menu_repository.dart';
 import '../../modules/menu/service/menu_service.dart';
+import '../../modules/orders/data/order_repository.dart';
+import '../../modules/orders/service/order_service.dart';
 import 'pizza_delivery_config.dart';
+import '../../modules/orders/controller/register_order_controller.dart';
 import '../../modules/users/controller/register_user_controller.dart';
 import '../../modules/users/data/user_repository.dart';
 import '../../modules/users/service/user_service.dart';
@@ -35,11 +40,16 @@ GetIt $initGetIt(
       () => DBConnection(get<PizzaDeliveryConfiguration>()));
   gh.lazySingleton<IMenuRepository>(() => MenuRepository(get<IDBConnection>()));
   gh.lazySingleton<IMenuService>(() => MenuService(get<IMenuRepository>()));
+  gh.lazySingleton<IOrderRepository>(
+      () => OrderRepostory(get<IDBConnection>()));
+  gh.lazySingleton<IOrderService>(() => OrderService(get<IOrderRepository>()));
   gh.lazySingleton<IUserRepository>(() => UserRepository(get<IDBConnection>()));
   gh.lazySingleton<IUserService>(() => UserService(get<IUserRepository>()));
   gh.factory<LoginUserController>(
       () => LoginUserController(get<IUserService>()));
   gh.factory<MenuFindController>(() => MenuFindController(get<IMenuService>()));
+  gh.factory<RegisterOrderController>(
+      () => RegisterOrderController(get<IOrderService>()));
   gh.factory<RegisterUserController>(
       () => RegisterUserController(get<IUserService>()));
   return get;
