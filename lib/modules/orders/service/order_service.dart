@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:pizza_delivery_api/application/entities/order.dart';
 import 'package:pizza_delivery_api/modules/orders/data/i_order_repository.dart';
 import 'package:pizza_delivery_api/modules/orders/view_objects/save_order_input_model.dart';
 
@@ -13,5 +14,10 @@ class OrderService implements IOrderService {
   @override
   Future<void> saveOrder(SaveOrderInputModel orderInput) async {
     await _repository.saveOrder(orderInput);
+  }
+
+  @override
+  Future<List<Order>> findByUserId(int userId) {
+    return _repository.findOrderByUserId(userId);
   }
 }

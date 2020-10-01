@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
 import '../database/db_connection.dart';
+import '../../modules/orders/controller/models/find_by_user_controller.dart';
 import '../database/i_db_connection.dart';
 import '../../modules/menu/data/i_menu_repository.dart';
 import '../../modules/menu/service/i_menu_service.dart';
@@ -52,5 +53,7 @@ GetIt $initGetIt(
       () => RegisterOrderController(get<IOrderService>()));
   gh.factory<RegisterUserController>(
       () => RegisterUserController(get<IUserService>()));
+  gh.factory<FindByUserController>(
+      () => FindByUserController(get<IOrderService>()));
   return get;
 }
